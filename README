@@ -1,0 +1,22 @@
+Arboresence fichier et dossier:
+  - controllers       (Il recois les requetes - UserController -> recois les requetes verifier 
+                      les droits et le retour des code erreur puis diriger vers les services)
+  - services          (Les fonctionnements qui interagises directement avec la base de donnée Chercher
+                      modifier supprimer, etc.. (login))
+  - schemas           (Ils contiennes des informations de structure de votre base de données 
+                      par schema ou table)
+  - middlewares       (Les fonctions HTTP de middleware qui verifie que les conditions sont 
+                      requises pour acceder au controllers)
+  - utils             (Toutes les fonctions annexes et reutilisable de votre code)
+  - tests             (Il contient les tests de toutes les fonctions)
+    - services        (Les tests des fonctions services)
+    - controllers     (Les tests des fonctions de controllers)
+    index.js          (Il pilote tout les tests)
+  - events            (Il contient tout les evenements qui peuvent se produit dans le logiciel
+                      (connexion a la base de donnée),modification, ou creation d'element dans
+                      la base de données)
+  - logs              (Ils contiennes les logs de l'application)
+  config.js           (Ils contiennes les configurations de l'application (secret_key, port, etc..))
+  server.js           (Le  point d'entre de l'application ils contiennes tout les endpoint 
+                      qui dirige vers les bons controllers, il initialise aussi les middlewares 
+                      et autre systeme de l'application)
