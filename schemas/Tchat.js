@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var TchatSchema = mongoose.Schema({
+var TrackSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -19,11 +19,14 @@ var TchatSchema = mongoose.Schema({
         required: true,
 
     },
-
+    quantity: {
+      type: Number,
+      required: false,
+    }
   })
 
 
-module.exports = TchatSchema;
+module.exports = TrackSchema;
 
 
 
