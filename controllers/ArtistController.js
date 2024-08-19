@@ -1,12 +1,12 @@
-const AlbumService = require("../services/AlbumService");
+ArtistService = require("../services/ArtistService");
 const LoggerHttp = require("../utils/logger").http;
 
-// La fonction permet d'ajouter un article
-module.exports.addOneAlbum = function (req, res) {
+// La fonction permet d'ajouter un Artist
+module.exports.addOneArtist = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Création d'une Album");
+  req.log.info("Création d'un Artist");
   var options = {user: req, res}
-  AlbumService.addOneAlbum(req.body, null, function (err, value) {
+  ArtistService.addOneArtist(req.body, null, function (err, value) {
     if (err && err.type_error == "no found") {
       res.statusCode = 404;
       res.send(err);
@@ -23,10 +23,10 @@ module.exports.addOneAlbum = function (req, res) {
   });
 };
 
-// La fonction permet d'ajouter plusieurs Albums
-module.exports.addManyAlbums = function (req, res) {
-  req.log.info("Création de plusieurs Albums");
-  AlbumService.addManyAlbums(req.body, null, function (err, value) {
+// La fonction permet d'ajouter plusieurs Artists
+module.exports.addManyArtists = function (req, res) {
+  req.log.info("Création de plusieurs Artists");
+  ArtistService.addManyArtists(req.body, null, function (err, value) {
     if (err) {
       res.statusCode = 405;
       res.send(err);
@@ -37,11 +37,11 @@ module.exports.addManyAlbums = function (req, res) {
   });
 };
 
-// La fonction permet de chercher une Album
-module.exports.findOneAlbumById = function (req, res) {
-  req.log.info("Recherche d'une Album par son id");
+// La fonction permet de chercher une Artist
+module.exports.findOneArtistById = function (req, res) {
+  req.log.info("Recherche d'une Artist par son id");
   var opts = { populate: req.query.populate };
-  AlbumService.findOneAlbumById(req.params.id, opts, function (err, value) {
+  ArtistService.findOneArtistById(req.params.id, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -58,14 +58,14 @@ module.exports.findOneAlbumById = function (req, res) {
   });
 };
 
-// La fonction permet de chercher plusieurs Albums
-module.exports.findManyAlbumsById = function (req, res) {
+// La fonction permet de chercher plusieurs Artists
+module.exports.findManyArtistsById = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche de plusieurs Albums", req.query.id);
+  req.log.info("Recherche de plusieurs Artists", req.query.id);
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var opts = { populate: req.query.populate };
-  AlbumService.findManyAlbumsById(arg, opts, function (err, value) {
+  ArtistService.findManyArtistsById(arg, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -83,13 +83,13 @@ module.exports.findManyAlbumsById = function (req, res) {
 };
 
 // La fonction permet de chercher un utilisateur par les champs autorisé
-module.exports.findOneAlbum = function (req, res) {
+module.exports.findOneArtist = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche d'un article par un champ autorisé");
+  req.log.info("Recherche d'un Artist par un champ autorisé");
   let fields = req.query.fields;
   if (fields && !Array.isArray(fields)) fields = [fields];
   var opts = { populate: req.query.populate };
-  AlbumService.findOneAlbum(
+  ArtistService.findOneArtist(
     fields,
     req.query.value,
     opts,
@@ -112,13 +112,13 @@ module.exports.findOneAlbum = function (req, res) {
 };
 
 // La fonction permet de chercher plusieurs utilisateurs
-module.exports.findManyAlbums = function (req, res) {
-  req.log.info("Recherche de plusieurs Albums");
+module.exports.findManyArtists = function (req, res) {
+  req.log.info("Recherche de plusieurs Artists");
   let page = req.query.page;
   let pageSize = req.query.pageSize;
   let searchValue = req.query.q;
   var opts = { populate: req.query.populate };
-  AlbumService.findManyAlbums(
+  ArtistService.findManyArtists(
     searchValue,
     pageSize,
     page,
@@ -138,12 +138,12 @@ module.exports.findManyAlbums = function (req, res) {
   );
 };
 
-// La fonction permet de modifier une Album
-module.exports.updateOneAlbum = function (req, res) {
+// La fonction permet de modifier une Artist
+module.exports.updateOneArtist = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification d'un Album");
+  req.log.info("Modification d'une Artist");
   let update = req.body;
-  AlbumService.updateOneAlbum(
+  ArtistService.updateOneArtist(
     req.params.id,
     update,
     null,
@@ -170,14 +170,14 @@ module.exports.updateOneAlbum = function (req, res) {
   );
 };
 
-// La fonction permet de modifier plusieurs articles
-module.exports.updateManyAlbums = function (req, res) {
+// La fonction permet de modifier plusieurs Artists
+module.exports.updateManyArtists = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification de plusieurs Albums");
+  req.log.info("Modification de plusieurs Artists");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var updateData = req.body;
-  AlbumService.updateManyAlbums(
+  ArtistService.updateManyArtists(
     arg,
     updateData,
     null,
@@ -203,11 +203,11 @@ module.exports.updateManyAlbums = function (req, res) {
   );
 };
 
-// La fonction permet de supprimer une Album
-module.exports.deleteOneAlbum = function (req, res) {
+// La fonction permet de supprimer une Artist
+module.exports.deleteOneArtist = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression d'un Album");
-  AlbumService.deleteOneAlbum(req.params.id, null, function (err, value) {
+  req.log.info("Suppression d'une Artist");
+  ArtistService.deleteOneArtist(req.params.id, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -224,13 +224,13 @@ module.exports.deleteOneAlbum = function (req, res) {
   });
 };
 
-// La fonction permet de supprimer plusieurs Albums
-module.exports.deleteManyAlbums = function (req, res) {
+// La fonction permet de supprimer plusieurs Artists
+module.exports.deleteManyArtists = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression de plusieurs Albums");
+  req.log.info("Suppression de plusieurs Artists");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
-  AlbumService.deleteManyAlbumes(arg, null, function (err, value) {
+  ArtistService.deleteManyArtists(arg, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);

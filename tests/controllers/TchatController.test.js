@@ -1,4 +1,4 @@
-const UserService = require("../../services/UserService");
+const TchatService = require("../../services/TchatService");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const expect = chai.expect;

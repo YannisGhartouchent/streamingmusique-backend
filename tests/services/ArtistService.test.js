@@ -1,85 +1,75 @@
-const TrackService = require("../../services/TrackService");
-const UserService = require("../../services/UserService");
+Artistconst = require("../../services/ArtistService");
+const ArtistService = require("../../services/ArtistService");
 const chai = require("chai");
 let expect = chai.expect;
 const _ = require("lodash");
-var id_Track_valid = "";
-var tab_id_Tracks = [];
-var Track = [];
+var id_Artist_valid = "";
+var tab_id_Artists = [];
+var Artist = [];
 
-let tracks = [
+let artists = [
 
    {
-    name: "melodie",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t00,
+    artist_name: "Yayalamenace",
+    imageURL: "imgURL",
+    artist_id: "ObjectId",
   },
   {
-    name: "melodie1",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t01,
+    artist_name: "Yayalameumeu",
+    imageURL: "imgURL",
+    artist_id: "ObjectId",
   },
   {
-    name: "melodie2",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t02,
+    artist_name: "Yayalamala",
+    imageURL: "imgURL",
+    artist_id: "ObjectId",
   },
   {
-    name: "melodie3",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t03,
+    artist_name: "Yayalamelo",
+    imageURL: "imgURL",
+    artist_id: "ObjectId",
   },
 ];
 
 it("Création des utilisateurs fictif", (done) => {
-  UserService.addManyUsers(users, null, function (err, value) {
-    tab_id_users = _.map(value, "_id");
+  UserService.addManyArtists(artists, null, function (err, value) {
+    tab_id_artists = _.map(value, "_id");
     done();
   });
 });
 
-function rdm_user(tab) {
+  function rdm_user(tab) {
   let rdm_id = tab[Math.floor(Math.random() * (tab.length - 1))];
   return rdm_id;
 }
 
-describe("addOneTrack", () => {
-  it("Track correct. - S", (done) => {
-    var Track = {
-      name: "test",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
+describe("addOneArtist", () => {
+  it("Artist correct. - S", (done) => {
+    var Artist = {
+      artist_name: "test",
+      imageURL: "imgURL",
+      artist_id: "45777" ,
       user_id: rdm_user(tab_id_users),
     };
-    TrackService.addOneTrack(Track, null, function (err, value) {
+    ArtistService.addOneArtist(Artist, null, function (err, value) {
       console.log(err);
       expect(value).to.be.a("object");
       expect(value).to.haveOwnProperty("_id");
-      expect(value).to.haveOwnProperty("user_id");
-      id_Track_valid = value._id;
-      Track.push(value);
+      expect(value).to.haveOwnProperty("artist_id");
+      id_Artist_valid = value._id;
+      Artist.push(value);
       done();
     });
   });
-  it("Track incorrect. (Sans name) - E", (done) => {
+  it("Artist incorrect. (Sans name) - E", (done) => {
     var article_no_valid = {
-     name: "test",
-      imageURL: imgURL,
-      type: String,
-      duration: 190000,
+      artist_name: "test",
+      imageURL: "imgURL",
+      artist_id: "45777" ,
       user_id: rdm_user(tab_id_users),
     }
-    TrackService.addOneArticle(
-      Track_no_valid,
+    ArtistService.addOneArticle(
+      Artist_no_valid,
       null,
       // rdm_user(tab_id_users),
       function (err, value) {
@@ -96,9 +86,9 @@ describe("addOneTrack", () => {
   });
 });
 
-describe("addManyTracks", () => {
-  it("Tracks à ajouter, valide. - S", (done) => {
-    var Tracks_tab = [
+describe("addManyArtists", () => {
+  it("Artists à ajouter, valide. - S", (done) => {
+    var Artists_tab = [
       {
        name: "classic",
       imageURL: imgURL,
@@ -122,41 +112,39 @@ describe("addManyTracks", () => {
       },
     ];
 
-    ArticleService.addManyTracks(Tracks_tab, null, function (err, value) {
-      tab_id_Tracks = _.map(value, "_id");
-      Tracks = [...value, ...tarcks];
+    ArticleService.addManyArtists(Artists_tab, null, function (err, value) {
+      tab_id_Artists = _.map(value, "_id");
+      Artists = [...value, ...tarcks];
       expect(value).lengthOf(3);
       //console.log(value);
       done();
     });
   });
-  it("Tracks à ajouter, non valide. - E", (done) => {
-    var Tracks_tab_error = [
+  it("Artists à ajouter, non valide. - E", (done) => {
+    var Artists_tab_error = [
       {
-        name: "classic",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
+      artist_name: "artist0",
+      imageURL: "imgURL",
+      artist_id: "art0" ,
       user_id: rdm_user(tab_id_users),
       },
       {
-         name: "classic1",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
+      artist_name: "artist1",
+      imageURL: "imgURL",
+      artist_id: "art1" ,
       user_id: rdm_user(tab_id_users),
       },
       {
-         name: "",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
+       artist_name: "",
+      imageURL: "imgURL",
+      artist_id: "art3" ,
+      user_id: rdm_user(tab_id_users),
       user_id: rdm_user(tab_id_users),
       }
     ];
 
-    TrackService.addManyTracks(
-      Tracks_tab_error,
+    ArtistService.addManyArtists(
+      Artists_tab_error,
       null,
       function (err, value) {
         done();
@@ -165,23 +153,23 @@ describe("addManyTracks", () => {
   });
 });
 
-describe("findOneTrackById", () => {
-  it("Chercher un Track existant correct. - S", (done) => {
-    console.log(id_Track_valid);
-    TrackService.findOneTrackById(
-      id_Track_valid,
+describe("findOneArtistById", () => {
+  it("Chercher un Artist existant correct. - S", (done) => {
+    console.log(id_Artist_valid);
+    ArtistService.findOneArtistById(
+      id_Artist_valid,
       null,
       function (err, value) {
         //   console.log(err, id_article_valid);
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
-        expect(value).to.haveOwnProperty("name");
+        expect(value).to.haveOwnProperty("artist_id");
+        expect(value).to.haveOwnProperty("artist_name");
         done();
       }
     );
   });
-  it("Chercher un Track non-existant correct. - E", (done) => {
-    TrackService.findOneTrackById("100", null, function (err, value) {
+  it("Chercher un Artist non-existant correct. - E", (done) => {
+    ArtistService.findOneArtistById("100", null, function (err, value) {
       expect(err).to.haveOwnProperty("msg");
       expect(err).to.haveOwnProperty("type_error");
       expect(err["type_error"]).to.equal("no-valid");
@@ -190,10 +178,10 @@ describe("findOneTrackById", () => {
   });
 });
 
-describe("findManyTracksById", () => {
-  it("Chercher des Tracks existant correct. - S", (done) => {
-    TrackService.findManyTracksById(
-      tab_id_Tracks,
+describe("findManyArtistsById", () => {
+  it("Chercher des Artists existant correct. - S", (done) => {
+    ArtistService.findManyArtistsById(
+      tab_id_Artists,
       null,
       function (err, value) {
         expect(value).lengthOf(3);
@@ -203,22 +191,22 @@ describe("findManyTracksById", () => {
   });
 });
 
-describe("findOneTrack", () => {
-  it("Chercher une Track par les champs selectionnées. - S", (done) => {
-    TrackService.findOneTrack(
-      ["name", "type"],
-      Tracks[0].name,
+describe("findOneArtist", () => {
+  it("Chercher une Artist par les champs selectionnées. - S", (done) => {
+    ArtistService.findOneArtist(
+      ["artist_name", "artist_id"],
+      Artists[0].artist_name,
       null,
       function (err, value) {
-        expect(value).to.haveOwnProperty("name");
+        expect(value).to.haveOwnProperty("artist_name");
         done();
       }
     );
   });
-  it("Chercher une Track sans tableau de champ. - E", (done) => {
-    TrackService.findOneArticle(
-      "name",
-      Tracks[0].name,
+  it("Chercher une Artist sans tableau de champ. - E", (done) => {
+    ArtistService.findOneArticle(
+      "artist_name",
+      Artists[0].artist_name,
       null,
       function (err, value) {
         expect(err).to.haveOwnProperty("type_error");
@@ -226,10 +214,10 @@ describe("findOneTrack", () => {
       }
     );
   });
-  it("Chercher une Track inexistant. - E", (done) => {
-    TrackService.findOneTrack(
-      ["name"],
-      "Tracks[0].name",
+  it("Chercher une Artist inexistant. - E", (done) => {
+    ArtistService.findOneArtist(
+      ["artist_name"],
+      "Artists[0].artist_name",
       null,
       function (err, value) {
         expect(err).to.haveOwnProperty("type_error");
@@ -239,9 +227,9 @@ describe("findOneTrack", () => {
   });
 });
 
-describe("findManyTracks", () => {
-  it("Retourne 3 Tracks - S", (done) => {
-    TrackService.findManyTracks(null, 3, 1, null, function (err, value) {
+describe("findManyArtists", () => {
+  it("Retourne 3 Artists - S", (done) => {
+    ArtistService.findManyArtists(null, 3, 1, null, function (err, value) {
       expect(value).to.haveOwnProperty("count");
       expect(value).to.haveOwnProperty("results");
       expect(value["count"]).to.be.equal(4);
@@ -251,7 +239,7 @@ describe("findManyTracks", () => {
     });
   });
   it("Faire une recherche avec 0 résultats correspondant - S", (done) => {
-    TrackService.findManyTracks(
+    ArtistService.findManyArtists(
       "classic",
       1,
       3,
@@ -267,9 +255,9 @@ describe("findManyTracks", () => {
     );
   });
   it("Envoie d'une chaine de caractère a la place de la page - E", (done) => {
-    TrackService.findManyTracks(
+    ArtistService.findManyArtists(
       null,
-      "classic1",
+      "artist1",
       3,
       null,
       function (err, value) {
@@ -283,27 +271,24 @@ describe("findManyTracks", () => {
 });
 
 describe("updateOneArticle", () => {
-  it("Modifier une Track correct. - S", (done) => {
-    TrackService.updateOneTrack(
-      id_Track_valid,
-      { name: "classic2", type: "rap" },
+  it("Modifier une Artist correct. - S", (done) => {
+    ArtistService.updateOneArtist(
+      id_Artist_valid,
+      { name: "artist2" },
       null,
       function (err, value) {
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
-        expect(value).to.haveOwnProperty("name");
-        expect(value).to.haveOwnProperty("type");
+        expect(value).to.haveOwnProperty("artist_id");
         expect(value).to.haveOwnProperty("updated_at");
-        expect(value["name"]).to.be.equal("classic2");
-        expect(value["type"]).to.be.equal("rap");
+        expect(value["name"]).to.be.equal("artist2");
         done();
       }
     );
   });
-  it("Modifier une Track avec id incorrect. - E", (done) => {
-    TrackService.updateOneTrack(
+  it("Modifier une Artist avec id incorrect. - E", (done) => {
+    ArtistService.updateOneArtist(
       "1200",
-      { name: "classic3", duration: 200000 },
+      { artist_name: "artist3", artist_id: "400"  },
       null,
       function (err, value) {
         expect(err).to.be.a("object");
@@ -314,43 +299,43 @@ describe("updateOneArticle", () => {
       }
     );
   });
-  it("Modifier une Track avec des champs requis vide. - E", (done) => {
-    TrackService.updateOneTrack(
-      id_Track_valid,
-      { name: "", type: "rock" },
+  it("Modifier une Artist avec des champs requis vide. - E", (done) => {
+    ArtistService.updateOneArtist(
+      id_Artist_valid,
+      { artist_name: "", artist_id: "rock" },
       null,
       function (err, value) {
         expect(value).to.be.undefined;
         expect(err).to.haveOwnProperty("msg");
         expect(err).to.haveOwnProperty("fields_with_error").with.lengthOf(1);
         expect(err).to.haveOwnProperty("fields");
-        expect(err["fields"]).to.haveOwnProperty("name");
-        expect(err["fields"]["name"]).to.equal("Path `name` is required.");
+        expect(err["fields"]).to.haveOwnProperty("artist_name");
+        expect(err["fields"]["artist_name"]).to.equal("Path `artist_name` is required.");
         done();
       }
     );
   });
 });
 
-describe("updateManyTracks", () => {
-  it("Modifier plusieurs Tracks correctement. - S", (done) => {
-    TrackService.updateManyTracks(
-      tab_id_Tracks,
-      { name: "classic3", type: "pop" },
+describe("updateManyArtists", () => {
+  it("Modifier plusieurs Artists correctement. - S", (done) => {
+    ArtistService.updateManyArtists(
+      tab_id_Artists,
+      { name: "artist3", artist_id: "410" },
       null,
       function (err, value) {
         expect(value).to.haveOwnProperty("modifiedCount");
         expect(value).to.haveOwnProperty("matchedCount");
-        expect(value["matchedCount"]).to.be.equal(tab_id_Tracks.length);
-        expect(value["modifiedCount"]).to.be.equal(tab_id_Tracks.length);
+        expect(value["matchedCount"]).to.be.equal(tab_id_Artists.length);
+        expect(value["modifiedCount"]).to.be.equal(tab_id_Artists.length);
         done();
       }
     );
   });
-  it("Modifier plusieurs Tracks avec id incorrect. - E", (done) => {
-    TrackService.updateManyTracks(
+  it("Modifier plusieurs Artists avec id incorrect. - E", (done) => {
+    ArtistService.updateManyArtists(
       "1200",
-      { name: "banger", type: "kpop" },
+      { artist_name: "lartist", artist_id: "lartist0" },
       null,
       function (err, value) {
         expect(err).to.be.a("object");
@@ -361,40 +346,39 @@ describe("updateManyTracks", () => {
       }
     );
   });
-  it("Modifier plusieurs Tracks avec des champs requis vide. - E", (done) => {
-    TrackService.updateManyTracks(
-      tab_id_Tracks,
-      { name: "", type: "test" },
+  it("Modifier plusieurs Artists avec des champs requis vide. - E", (done) => {
+    ArtistService.updateManyArtists(
+      tab_id_Artists,
+      { name: "", artist_id: "art0101" },
       null,
       function (err, value) {
         expect(value).to.be.undefined;
         expect(err).to.haveOwnProperty("msg");
         expect(err).to.haveOwnProperty("fields_with_error").with.lengthOf(1);
         expect(err).to.haveOwnProperty("fields");
-        expect(err["fields"]).to.haveOwnProperty("name");
-        expect(err["fields"]["name"]).to.equal("Path `name` is required.");
+        expect(err["fields"]).to.haveOwnProperty("artist_name");
+        expect(err["fields"]["artist_name"]).to.equal("Path `artist_name` is required.");
         done();
       }
     );
   });
 });
 
-describe("deleteOneTrack", () => {
-  it("Supprimer une Track correct. - S", (done) => {
-    TrackService.deleteOneTrack(
-      id_Track_valid,
+describe("deleteOneArtist", () => {
+  it("Supprimer une Artist correct. - S", (done) => {
+    ArtistService.deleteOneArtist(
+      id_Artist_valid,
       null,
       function (err, value) {
         //callback
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
-        expect(value).to.haveOwnProperty("name");
-        expect(value).to.haveOwnProperty("duration");
+        expect(value).to.haveOwnProperty("artist_id");
+        expect(value).to.haveOwnProperty("artist_name");
         done();
       }
     );
   });
-  it("Supprimer une Track avec id incorrect. - E", (done) => {
+  it("Supprimer une Artist avec id incorrect. - E", (done) => {
     ArticleService.deleteOneArticle("1200", null, function (err, value) {
       expect(err).to.be.a("object");
       expect(err).to.haveOwnProperty("msg");
@@ -403,8 +387,8 @@ describe("deleteOneTrack", () => {
       done();
     });
   });
-  it("Supprimer une Track avec un id inexistant. - E", (done) => {
-    TrackService.deleteOneTrack(
+  it("Supprimer une Artist avec un id inexistant. - E", (done) => {
+    ArtistService.deleteOneArtist(
       "665f00c6f64f76ba59361e9f",
       null,
       function (err, value) {
@@ -418,21 +402,21 @@ describe("deleteOneTrack", () => {
   });
 });
 
-describe("deleteManyTracks", () => {
-  it("Supprimer plusieurs Tracks correctements. - S", (done) => {
-    TrackService.deleteManyTracks(
-      tab_id_Tracks,
+describe("deleteManyArtists", () => {
+  it("Supprimer plusieurs Artists correctements. - S", (done) => {
+    ArtistService.deleteManyArtists(
+      tab_id_Artists,
       null,
       function (err, value) {
         expect(value).to.be.a("object");
         expect(value).to.haveOwnProperty("deletedCount");
-        expect(value["deletedCount"]).is.equal(tab_id_Tracks.length);
+        expect(value["deletedCount"]).is.equal(tab_id_Artists.length);
         done();
       }
     );
   });
-  it("Supprimer plusieurs Tracks avec id incorrect. - E", (done) => {
-    TrackService.deleteManyTracks("1200", null, function (err, value) {
+  it("Supprimer plusieurs Artists avec id incorrect. - E", (done) => {
+    ArtistService.deleteManyArtists("1200", null, function (err, value) {
       expect(err).to.be.a("object");
       expect(err).to.haveOwnProperty("msg");
       expect(err).to.haveOwnProperty("type_error");

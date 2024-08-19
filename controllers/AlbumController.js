@@ -1,10 +1,10 @@
-const AlbumService = require("../services/AlbumService");
+AlbumService = require("../services/AlbumService");
 const LoggerHttp = require("../utils/logger").http;
 
-// La fonction permet d'ajouter un article
+// La fonction permet d'ajouter un Album
 module.exports.addOneAlbum = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Création d'une Album");
+  req.log.info("Création d'un Album");
   var options = {user: req, res}
   AlbumService.addOneAlbum(req.body, null, function (err, value) {
     if (err && err.type_error == "no found") {
@@ -39,7 +39,7 @@ module.exports.addManyAlbums = function (req, res) {
 
 // La fonction permet de chercher une Album
 module.exports.findOneAlbumById = function (req, res) {
-  req.log.info("Recherche d'une Album par son id");
+  req.log.info("Recherche d'un Album par son id");
   var opts = { populate: req.query.populate };
   AlbumService.findOneAlbumById(req.params.id, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
@@ -85,7 +85,7 @@ module.exports.findManyAlbumsById = function (req, res) {
 // La fonction permet de chercher un utilisateur par les champs autorisé
 module.exports.findOneAlbum = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche d'un article par un champ autorisé");
+  req.log.info("Recherche d'un Album par un champ autorisé");
   let fields = req.query.fields;
   if (fields && !Array.isArray(fields)) fields = [fields];
   var opts = { populate: req.query.populate };
@@ -141,7 +141,7 @@ module.exports.findManyAlbums = function (req, res) {
 // La fonction permet de modifier une Album
 module.exports.updateOneAlbum = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification d'un Album");
+  req.log.info("Modification d'une Album");
   let update = req.body;
   AlbumService.updateOneAlbum(
     req.params.id,
@@ -170,7 +170,7 @@ module.exports.updateOneAlbum = function (req, res) {
   );
 };
 
-// La fonction permet de modifier plusieurs articles
+// La fonction permet de modifier plusieurs Albums
 module.exports.updateManyAlbums = function (req, res) {
   LoggerHttp(req, res);
   req.log.info("Modification de plusieurs Albums");
@@ -230,7 +230,7 @@ module.exports.deleteManyAlbums = function (req, res) {
   req.log.info("Suppression de plusieurs Albums");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
-  AlbumService.deleteManyAlbumes(arg, null, function (err, value) {
+  AlbumService.deleteManyAlbums(arg, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);

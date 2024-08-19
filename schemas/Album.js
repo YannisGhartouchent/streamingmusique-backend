@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const ObjectId = mongoose.Types.ObjectId
+
 var AlbumSchema = mongoose.Schema({
     date: {
         type: Date,
@@ -8,11 +10,6 @@ var AlbumSchema = mongoose.Schema({
         type: ObjectId,
         required: true,
 
-    },
-    _id: {
-        type: ObjectId,
-        required: true,
-        
     },
     duration: {
     type: Number,
@@ -26,6 +23,14 @@ var AlbumSchema = mongoose.Schema({
     },
     updated_at: {
     type: Date,
-    },
+    
+  
+  },
+  quantity: {
+      type: Number,
+      required: false,
+  }
+
+  
 })
 module.exports = AlbumSchema;

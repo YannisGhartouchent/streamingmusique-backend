@@ -5,7 +5,6 @@ let expect = chai.expect;
 const _ = require("lodash");
 var id_Tchat_valid = "";
 var tab_id_Tchats = [];
-var tab_id_users = [];
 var Tchat = [];
 
 let tchats = [

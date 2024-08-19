@@ -5,8 +5,7 @@ var TrackSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  
-    id: {
+      album :{
         type: ObjectId,
         required: true,
     },
@@ -17,10 +16,29 @@ var TrackSchema = mongoose.Schema({
     type: {
         type: String,
         required: true,
+  },
+     duration: {
+    type: "Number",
+    required: true,
+  },
+     track_id: {
+     type: ObjectId,
+     required: true,
+  },
+      quantity: {
+      type: Number,
+      required: false,
+  },
+  created_At: {
+    type: Date,
+    default: new Date(),
+  },
+  updated_at: {
+    type: Date,
+  }
+  
 
-    },
 
   })
-
 
 module.exports = TrackSchema;

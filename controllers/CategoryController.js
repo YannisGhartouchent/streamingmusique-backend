@@ -1,12 +1,12 @@
-const AlbumService = require("../services/AlbumService");
+const CategoryService = require("../services/CategoryService");
 const LoggerHttp = require("../utils/logger").http;
 
-// La fonction permet d'ajouter un article
-module.exports.addOneAlbum = function (req, res) {
+// La fonction permet d'ajouter un Category
+module.exports.addOneCategory = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Création d'une Album");
+  req.log.info("Création d'un Category");
   var options = {user: req, res}
-  AlbumService.addOneAlbum(req.body, null, function (err, value) {
+  CategoryService.addOneCategory(req.body, null, function (err, value) {
     if (err && err.type_error == "no found") {
       res.statusCode = 404;
       res.send(err);
@@ -23,10 +23,10 @@ module.exports.addOneAlbum = function (req, res) {
   });
 };
 
-// La fonction permet d'ajouter plusieurs Albums
-module.exports.addManyAlbums = function (req, res) {
-  req.log.info("Création de plusieurs Albums");
-  AlbumService.addManyAlbums(req.body, null, function (err, value) {
+// La fonction permet d'ajouter plusieurs Categories
+module.exports.addManyCategories = function (req, res) {
+  req.log.info("Création de plusieurs Categories");
+  CategoryService.addManyCategories(req.body, null, function (err, value) {
     if (err) {
       res.statusCode = 405;
       res.send(err);
@@ -37,11 +37,11 @@ module.exports.addManyAlbums = function (req, res) {
   });
 };
 
-// La fonction permet de chercher une Album
-module.exports.findOneAlbumById = function (req, res) {
-  req.log.info("Recherche d'une Album par son id");
+// La fonction permet de chercher une Category
+module.exports.findOneCategoryById = function (req, res) {
+  req.log.info("Recherche d'une Category par son id");
   var opts = { populate: req.query.populate };
-  AlbumService.findOneAlbumById(req.params.id, opts, function (err, value) {
+  CategoryService.findOneCategoryById(req.params.id, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -58,14 +58,14 @@ module.exports.findOneAlbumById = function (req, res) {
   });
 };
 
-// La fonction permet de chercher plusieurs Albums
-module.exports.findManyAlbumsById = function (req, res) {
+// La fonction permet de chercher plusieurs Categories
+module.exports.findManyCategoriesById = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche de plusieurs Albums", req.query.id);
+  req.log.info("Recherche de plusieurs Categories", req.query.id);
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var opts = { populate: req.query.populate };
-  AlbumService.findManyAlbumsById(arg, opts, function (err, value) {
+  CategoryService.findManyCategoriesById(arg, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -83,13 +83,13 @@ module.exports.findManyAlbumsById = function (req, res) {
 };
 
 // La fonction permet de chercher un utilisateur par les champs autorisé
-module.exports.findOneAlbum = function (req, res) {
+module.exports.findOneCategory = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche d'un article par un champ autorisé");
+  req.log.info("Recherche d'un Category par un champ autorisé");
   let fields = req.query.fields;
   if (fields && !Array.isArray(fields)) fields = [fields];
   var opts = { populate: req.query.populate };
-  AlbumService.findOneAlbum(
+  CategoryService.findOneCategory(
     fields,
     req.query.value,
     opts,
@@ -112,13 +112,13 @@ module.exports.findOneAlbum = function (req, res) {
 };
 
 // La fonction permet de chercher plusieurs utilisateurs
-module.exports.findManyAlbums = function (req, res) {
-  req.log.info("Recherche de plusieurs Albums");
+module.exports.findManyCategories = function (req, res) {
+  req.log.info("Recherche de plusieurs Categories");
   let page = req.query.page;
   let pageSize = req.query.pageSize;
   let searchValue = req.query.q;
   var opts = { populate: req.query.populate };
-  AlbumService.findManyAlbums(
+  CategoryService.findManyCategories(
     searchValue,
     pageSize,
     page,
@@ -138,12 +138,12 @@ module.exports.findManyAlbums = function (req, res) {
   );
 };
 
-// La fonction permet de modifier une Album
-module.exports.updateOneAlbum = function (req, res) {
+// La fonction permet de modifier une Category
+module.exports.updateOneCategory = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification d'un Album");
+  req.log.info("Modification d'une Category");
   let update = req.body;
-  AlbumService.updateOneAlbum(
+  CategoryService.updateOneCategory(
     req.params.id,
     update,
     null,
@@ -170,14 +170,14 @@ module.exports.updateOneAlbum = function (req, res) {
   );
 };
 
-// La fonction permet de modifier plusieurs articles
-module.exports.updateManyAlbums = function (req, res) {
+// La fonction permet de modifier plusieurs Categories
+module.exports.updateManyCategories = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification de plusieurs Albums");
+  req.log.info("Modification de plusieurs Categories");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var updateData = req.body;
-  AlbumService.updateManyAlbums(
+  CategoryService.updateManyCategories(
     arg,
     updateData,
     null,
@@ -203,11 +203,11 @@ module.exports.updateManyAlbums = function (req, res) {
   );
 };
 
-// La fonction permet de supprimer une Album
-module.exports.deleteOneAlbum = function (req, res) {
+// La fonction permet de supprimer une Category
+module.exports.deleteOneCategory = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression d'un Album");
-  AlbumService.deleteOneAlbum(req.params.id, null, function (err, value) {
+  req.log.info("Suppression d'une Category");
+  CategoryService.deleteOneCategory(req.params.id, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -224,13 +224,13 @@ module.exports.deleteOneAlbum = function (req, res) {
   });
 };
 
-// La fonction permet de supprimer plusieurs Albums
-module.exports.deleteManyAlbums = function (req, res) {
+// La fonction permet de supprimer plusieurs Categories
+module.exports.deleteManyCategories = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression de plusieurs Albums");
+  req.log.info("Suppression de plusieurs Categories");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
-  AlbumService.deleteManyAlbumes(arg, null, function (err, value) {
+  CategoryService.deleteManyCategories(arg, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);

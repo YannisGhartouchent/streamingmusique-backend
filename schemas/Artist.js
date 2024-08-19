@@ -15,6 +15,15 @@ var ArtistSchema = mongoose.Schema({
         required: true,
 
     },
+    
+  created_At: {
+    type: Date,
+    default: new Date(),
+  },
+  updated_at: {
+    type: Date,
+  }
+  
 
   })
 

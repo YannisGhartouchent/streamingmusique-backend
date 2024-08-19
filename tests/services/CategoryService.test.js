@@ -1,85 +1,69 @@
-const TrackService = require("../../services/TrackService");
-const UserService = require("../../services/UserService");
+const CategoryService = require("../../services/CategoryService");
 const chai = require("chai");
 let expect = chai.expect;
 const _ = require("lodash");
-var id_Track_valid = "";
-var tab_id_Tracks = [];
-var Track = [];
+var id_Category_valid = "";
+var tab_id_Categories = [];
+var Category = [];
 
-let tracks = [
-
-   {
-    name: "melodie",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t00,
+let Categories = [
+ {
+    name: "rap",
+    imageURL: "imgURL",
+    category_id: "ObjectId",
   },
   {
-    name: "melodie1",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t01,
+    name: "rock",
+    imageURL: "imgURL",
+    category_id: "ObjectId",
   },
   {
-    name: "melodie2",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t02,
+    name: "jazz",
+    imageURL: "imgURL",
+    category_id: "ObjectId",
   },
   {
-    name: "melodie3",
-    imageURL: imgURL,
-    duration: "198000",
-    type: rap,
-    track_id: t03,
+    name: "metal",
+    imageURL: "imgURL",
+    category_id: "ObjectId",
   },
-];
+]
 
 it("Création des utilisateurs fictif", (done) => {
-  UserService.addManyUsers(users, null, function (err, value) {
-    tab_id_users = _.map(value, "_id");
+  UserCategory.addManyCategories(categories, null, function (err, value) {
+    tab_id_categories = _.map(value, "_id");
     done();
   });
 });
 
-function rdm_user(tab) {
+function rdm_category(tab) {
   let rdm_id = tab[Math.floor(Math.random() * (tab.length - 1))];
   return rdm_id;
 }
 
-describe("addOneTrack", () => {
-  it("Track correct. - S", (done) => {
-    var Track = {
+describe("addOneCategory", () => {
+  it("Category correct. - S", (done) => {
+    var Category = {
       name: "test",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+      imageURL: "ObjectId",
     };
-    TrackService.addOneTrack(Track, null, function (err, value) {
+    CategoryService.addOneCategory(Category, null, function (err, value) {
       console.log(err);
       expect(value).to.be.a("object");
       expect(value).to.haveOwnProperty("_id");
-      expect(value).to.haveOwnProperty("user_id");
-      id_Track_valid = value._id;
-      Track.push(value);
+      expect(value).to.haveOwnProperty("category_id");
+      id_Category_valid = value._id;
+      Category.push(value);
       done();
     });
   });
-  it("Track incorrect. (Sans name) - E", (done) => {
+  it("Category incorrect. (Sans name) - E", (done) => {
     var article_no_valid = {
      name: "test",
-      imageURL: imgURL,
-      type: String,
-      duration: 190000,
-      user_id: rdm_user(tab_id_users),
+     imageURL: "ObjectId",
     }
-    TrackService.addOneArticle(
-      Track_no_valid,
+    CategoryService.addOneArticle(
+      Category_no_valid,
       null,
       // rdm_user(tab_id_users),
       function (err, value) {
@@ -96,67 +80,54 @@ describe("addOneTrack", () => {
   });
 });
 
-describe("addManyTracks", () => {
-  it("Tracks à ajouter, valide. - S", (done) => {
-    var Tracks_tab = [
+describe("addManyCategories", () => {
+  it("Categories à ajouter, valide. - S", (done) => {
+    var Categories_tab = [
       {
-       name: "classic",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+       name: "cat0",
+      imageURL: "ObjectId",
+     
       },
       {
-        name: "classic1",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+       name: "cat1",
+       imageURL: "ObjectId",
       },
       {
-      name: "classic2",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+      name: "cat2",
+      imageURL: "ObjectId",
+      
       },
     ];
 
-    ArticleService.addManyTracks(Tracks_tab, null, function (err, value) {
-      tab_id_Tracks = _.map(value, "_id");
-      Tracks = [...value, ...tarcks];
+    CategoryService.addManyCategories(Categories_tab, null, function (err, value) {
+      tab_id_Categories = _.map(value, "_id");
+      Categorys = [...value, ...tarcks];
       expect(value).lengthOf(3);
       //console.log(value);
       done();
     });
   });
-  it("Tracks à ajouter, non valide. - E", (done) => {
-    var Tracks_tab_error = [
+  it("Categories à ajouter, non valide. - E", (done) => {
+    var Categories_tab_error = [
       {
-        name: "classic",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+        name: "cat0",
+      imageURL: "ObjectId",
+     
       },
       {
-         name: "classic1",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+         name: "cat1",
+      imageURL: "ObjectId",
+      
       },
       {
-         name: "",
-      imageURL: imgURL,
-      type: String,
-      duration: 198000,
-      user_id: rdm_user(tab_id_users),
+         name: "cat2",
+      imageURL: "ObjectId",
+      
       }
     ];
 
-    TrackService.addManyTracks(
-      Tracks_tab_error,
+    CategoryService.addManyCategories(
+      Categories_tab_error,
       null,
       function (err, value) {
         done();
@@ -165,23 +136,23 @@ describe("addManyTracks", () => {
   });
 });
 
-describe("findOneTrackById", () => {
-  it("Chercher un Track existant correct. - S", (done) => {
-    console.log(id_Track_valid);
-    TrackService.findOneTrackById(
-      id_Track_valid,
+describe("findOneCategoryById", () => {
+  it("Chercher un Category existant correct. - S", (done) => {
+    console.log(id_Category_valid);
+    CategoryService.findOneCategoryById(
+      id_Category_valid,
       null,
       function (err, value) {
-        //   console.log(err, id_article_valid);
+        //   console.log(err, id_category_valid);
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
+        expect(value).to.haveOwnProperty("imageURL");
         expect(value).to.haveOwnProperty("name");
         done();
       }
     );
   });
-  it("Chercher un Track non-existant correct. - E", (done) => {
-    TrackService.findOneTrackById("100", null, function (err, value) {
+  it("Chercher un Category non-existant correct. - E", (done) => {
+    CategoryService.findOneCategoryById("100", null, function (err, value) {
       expect(err).to.haveOwnProperty("msg");
       expect(err).to.haveOwnProperty("type_error");
       expect(err["type_error"]).to.equal("no-valid");
@@ -190,10 +161,10 @@ describe("findOneTrackById", () => {
   });
 });
 
-describe("findManyTracksById", () => {
-  it("Chercher des Tracks existant correct. - S", (done) => {
-    TrackService.findManyTracksById(
-      tab_id_Tracks,
+describe("findManyCategoriesById", () => {
+  it("Chercher des Categories existant correct. - S", (done) => {
+    CategoryService.findManyCategoriesById(
+      tab_id_Categorys,
       null,
       function (err, value) {
         expect(value).lengthOf(3);
@@ -203,11 +174,11 @@ describe("findManyTracksById", () => {
   });
 });
 
-describe("findOneTrack", () => {
-  it("Chercher une Track par les champs selectionnées. - S", (done) => {
-    TrackService.findOneTrack(
-      ["name", "type"],
-      Tracks[0].name,
+describe("findOneCategory", () => {
+  it("Chercher une Category par les champs selectionnées. - S", (done) => {
+    CategoryService.findOneCategory(
+      ["name", "imageURL"],
+      Categories[0].name,
       null,
       function (err, value) {
         expect(value).to.haveOwnProperty("name");
@@ -215,10 +186,10 @@ describe("findOneTrack", () => {
       }
     );
   });
-  it("Chercher une Track sans tableau de champ. - E", (done) => {
-    TrackService.findOneArticle(
+  it("Chercher une Category sans tableau de champ. - E", (done) => {
+    CategoryService.findOneArticle(
       "name",
-      Tracks[0].name,
+      Categorys[0].name,
       null,
       function (err, value) {
         expect(err).to.haveOwnProperty("type_error");
@@ -226,10 +197,10 @@ describe("findOneTrack", () => {
       }
     );
   });
-  it("Chercher une Track inexistant. - E", (done) => {
-    TrackService.findOneTrack(
+  it("Chercher une Category inexistant. - E", (done) => {
+    CategoryService.findOneCategory(
       ["name"],
-      "Tracks[0].name",
+      "Categories[0].name",
       null,
       function (err, value) {
         expect(err).to.haveOwnProperty("type_error");
@@ -239,9 +210,9 @@ describe("findOneTrack", () => {
   });
 });
 
-describe("findManyTracks", () => {
-  it("Retourne 3 Tracks - S", (done) => {
-    TrackService.findManyTracks(null, 3, 1, null, function (err, value) {
+describe("findManyCategorys", () => {
+  it("Retourne 3 Categories - S", (done) => {
+    CategoryService.findManyCategories(null, 3, 1, null, function (err, value) {
       expect(value).to.haveOwnProperty("count");
       expect(value).to.haveOwnProperty("results");
       expect(value["count"]).to.be.equal(4);
@@ -251,8 +222,8 @@ describe("findManyTracks", () => {
     });
   });
   it("Faire une recherche avec 0 résultats correspondant - S", (done) => {
-    TrackService.findManyTracks(
-      "classic",
+    CategoryService.findManyCategorys(
+      "cat0",
       1,
       3,
       null,
@@ -267,9 +238,9 @@ describe("findManyTracks", () => {
     );
   });
   it("Envoie d'une chaine de caractère a la place de la page - E", (done) => {
-    TrackService.findManyTracks(
+    CategoryService.findManyCategorys(
       null,
-      "classic1",
+      "cat1",
       3,
       null,
       function (err, value) {
@@ -282,28 +253,27 @@ describe("findManyTracks", () => {
   });
 });
 
-describe("updateOneArticle", () => {
-  it("Modifier une Track correct. - S", (done) => {
-    TrackService.updateOneTrack(
-      id_Track_valid,
-      { name: "classic2", type: "rap" },
+describe("updateOnCategory", () => {
+  it("Modifier une Category correct. - S", (done) => {
+    CategoryService.updateOneCategory(
+      id_Category_valid,
+      { name: "cat1", imageURL: "ObjectId" },
       null,
       function (err, value) {
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
         expect(value).to.haveOwnProperty("name");
-        expect(value).to.haveOwnProperty("type");
+        expect(value).to.haveOwnProperty("imageURL");
         expect(value).to.haveOwnProperty("updated_at");
-        expect(value["name"]).to.be.equal("classic2");
-        expect(value["type"]).to.be.equal("rap");
+        expect(value["name"]).to.be.equal("cat1");
+        expect(value["imageURL"]).to.be.equal("ObjectId");
         done();
       }
     );
   });
-  it("Modifier une Track avec id incorrect. - E", (done) => {
-    TrackService.updateOneTrack(
+  it("Modifier une Category avec id incorrect. - E", (done) => {
+    CategoryService.updateOneCategory(
       "1200",
-      { name: "classic3", duration: 200000 },
+      { name: "cat2", imageURL: "NewObjectId" },
       null,
       function (err, value) {
         expect(err).to.be.a("object");
@@ -314,10 +284,10 @@ describe("updateOneArticle", () => {
       }
     );
   });
-  it("Modifier une Track avec des champs requis vide. - E", (done) => {
-    TrackService.updateOneTrack(
-      id_Track_valid,
-      { name: "", type: "rock" },
+  it("Modifier une Category avec des champs requis vide. - E", (done) => {
+    CategoryService.updateOneCategory(
+      id_Category_valid,
+      { name: "", imageURL: "NewObjectId" },
       null,
       function (err, value) {
         expect(value).to.be.undefined;
@@ -332,25 +302,25 @@ describe("updateOneArticle", () => {
   });
 });
 
-describe("updateManyTracks", () => {
-  it("Modifier plusieurs Tracks correctement. - S", (done) => {
-    TrackService.updateManyTracks(
-      tab_id_Tracks,
-      { name: "classic3", type: "pop" },
+describe("updateManyCategories", () => {
+  it("Modifier plusieurs Categories correctement. - S", (done) => {
+    CategoryService.updateManyCategories(
+      tab_id_Categories,
+      { name: "cat2", type: "pop" },
       null,
       function (err, value) {
         expect(value).to.haveOwnProperty("modifiedCount");
         expect(value).to.haveOwnProperty("matchedCount");
-        expect(value["matchedCount"]).to.be.equal(tab_id_Tracks.length);
-        expect(value["modifiedCount"]).to.be.equal(tab_id_Tracks.length);
+        expect(value["matchedCount"]).to.be.equal(tab_id_Categories.length);
+        expect(value["modifiedCount"]).to.be.equal(tab_id_Categories.length);
         done();
       }
     );
   });
-  it("Modifier plusieurs Tracks avec id incorrect. - E", (done) => {
-    TrackService.updateManyTracks(
+  it("Modifier plusieurs Categorys avec id incorrect. - E", (done) => {
+    CategoryService.updateManyCategories(
       "1200",
-      { name: "banger", type: "kpop" },
+      { name: "punk", imageURL: "NewObjectId" },
       null,
       function (err, value) {
         expect(err).to.be.a("object");
@@ -361,9 +331,9 @@ describe("updateManyTracks", () => {
       }
     );
   });
-  it("Modifier plusieurs Tracks avec des champs requis vide. - E", (done) => {
-    TrackService.updateManyTracks(
-      tab_id_Tracks,
+  it("Modifier plusieurs Categorys avec des champs requis vide. - E", (done) => {
+    CategoryService.updateManyCategories(
+      tab_id_Categories,
       { name: "", type: "test" },
       null,
       function (err, value) {
@@ -379,23 +349,22 @@ describe("updateManyTracks", () => {
   });
 });
 
-describe("deleteOneTrack", () => {
-  it("Supprimer une Track correct. - S", (done) => {
-    TrackService.deleteOneTrack(
-      id_Track_valid,
+describe("deleteOneCategory", () => {
+  it("Supprimer une Category correct. - S", (done) => {
+    CategoryService.deleteOneCategory(
+      id_Category_valid,
       null,
       function (err, value) {
         //callback
         expect(value).to.be.a("object");
-        expect(value).to.haveOwnProperty("_id");
+        expect(value).to.haveOwnProperty("imageURL");
         expect(value).to.haveOwnProperty("name");
-        expect(value).to.haveOwnProperty("duration");
         done();
       }
     );
   });
-  it("Supprimer une Track avec id incorrect. - E", (done) => {
-    ArticleService.deleteOneArticle("1200", null, function (err, value) {
+  it("Supprimer une Category avec id incorrect. - E", (done) => {
+    CategoryService.deleteOneCategory("1200", null, function (err, value) {
       expect(err).to.be.a("object");
       expect(err).to.haveOwnProperty("msg");
       expect(err).to.haveOwnProperty("type_error");
@@ -403,8 +372,8 @@ describe("deleteOneTrack", () => {
       done();
     });
   });
-  it("Supprimer une Track avec un id inexistant. - E", (done) => {
-    TrackService.deleteOneTrack(
+  it("Supprimer une Category avec un id inexistant. - E", (done) => {
+    CategoryService.deleteOneCategory(
       "665f00c6f64f76ba59361e9f",
       null,
       function (err, value) {
@@ -418,21 +387,21 @@ describe("deleteOneTrack", () => {
   });
 });
 
-describe("deleteManyTracks", () => {
-  it("Supprimer plusieurs Tracks correctements. - S", (done) => {
-    TrackService.deleteManyTracks(
-      tab_id_Tracks,
+describe("deleteManyCategories", () => {
+  it("Supprimer plusieurs Categories correctements. - S", (done) => {
+    CategoryService.deleteManyCategories(
+      tab_id_Categorys,
       null,
       function (err, value) {
         expect(value).to.be.a("object");
         expect(value).to.haveOwnProperty("deletedCount");
-        expect(value["deletedCount"]).is.equal(tab_id_Tracks.length);
+        expect(value["deletedCount"]).is.equal(tab_id_Categorys.length);
         done();
       }
     );
   });
-  it("Supprimer plusieurs Tracks avec id incorrect. - E", (done) => {
-    TrackService.deleteManyTracks("1200", null, function (err, value) {
+  it("Supprimer plusieurs Categories avec id incorrect. - E", (done) => {
+    CategoryService.deleteManyCategories("1200", null, function (err, value) {
       expect(err).to.be.a("object");
       expect(err).to.haveOwnProperty("msg");
       expect(err).to.haveOwnProperty("type_error");
@@ -443,7 +412,7 @@ describe("deleteManyTracks", () => {
 });
 
 it("Suppression des utilisateurs fictifs", (done) => {
-  UserService.deleteManyUsers(tab_id_users, null, function (err, value) {
+  CategoryService.deleteManyCategories(tab_id_users, null, function (err, value) {
     done();
   });
 });

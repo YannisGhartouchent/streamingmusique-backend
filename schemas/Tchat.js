@@ -22,11 +22,20 @@ var TrackSchema = mongoose.Schema({
     quantity: {
       type: Number,
       required: false,
-    }
+    
+    },
+  created_At: {
+    type: Date,
+    default: new Date(),
+  },
+  updated_at: {
+    type: Date,
+  }
+  
   })
 
 
-module.exports = TrackSchema;
+module.exports = TchatSchema;
 
 
 

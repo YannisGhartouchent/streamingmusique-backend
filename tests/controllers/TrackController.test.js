@@ -1,3 +1,4 @@
+const TrackService = require("../../services/TrackService");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const expect = chai.expect;
@@ -9,32 +10,32 @@ var Tracks = [];
 
 let tracks = [
   {
-    user_id: "abcd",
-    dayofbirth: "01/06/1999",
-    username: "yayagator",
-    email: "yayagator@gmail.com",
-    password: "12345",
+    name: "melodie",
+    imageURL: imgURL,
+    duration: "198000",
+    type: rap,
+    track_id: t00,
   },
   {
-    id_user: "abcdj",
-    dayofbirth: "03/04/1996",
-    username: "oui2",
-    email: "iencli2@gmail.com",
-    password: "12345",
+    name: "melodie1",
+    imageURL: imgURL,
+    duration: "198000",
+    type: rap,
+    track_id: t01,
   },
   {
-    id_user: "abcdje",
-    dayofbirth: "09/04/1996",
-    username: "oui3",
-    email: "iencli3@gmail.com",
-    password: "12345",
+    name: "melodie2",
+    imageURL: imgURL,
+    duration: "198000",
+    type: rap,
+    track_id: t02,
   },
   {
-    id_user: "abcdjl",
-    dayofbirth: "05/04/1996",
-    username: "oui4",
-    email: "iencli4@gmail.com",
-    password: "12345",
+    name: "melodie3",
+    imageURL: imgURL,
+    duration: "198000",
+    type: rap,
+    track_id: t03,
   },
 ];
 
@@ -194,7 +195,7 @@ describe("PUT - /Track", () => {
     chai
       .request(server)
       .put("/Track/" + Tracks[0]._id)
-      .send({ name: "Tv" })
+      .send({ name: "melomelo" })
       .end((err, res) => {
         res.should.have.status(200);
         done();

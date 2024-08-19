@@ -17,13 +17,35 @@ describe("TrackService", () => {
 describe("TrackController", () => {
   require("./controllers/TrackController.test");
 });
-escribe("TrackService", () => {
+describe("TchatService", () => {
   require("./services/TrackService.test");
 });
-
-describe("TrackController", () => {
+describe("TchatController", () => {
   require("./controllers/TrackController.test");
-})
+});
+
+describe("CategoryController", () => {
+  require("./controllers/CategoryController.test");
+});
+describe("CategoryService", () => {
+  require("./services/CategoryService.test");
+});
+
+describe("ArtistController", () => {
+  require("./controllers/ArtistController.test");
+});
+describe("ArtistService", () => {
+  require("./services/ArtistService.test");
+});
+
+describe("AlbumController", () => {
+  require("./controllers/AlbumController.test");
+});
+describe("AlbumService", () => {
+  require("./services/AlbumService.test");
+});
+
+
 
 
 

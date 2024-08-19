@@ -1,12 +1,12 @@
-const TchatService = require("../services/TchatService");
+const TrackService = require("../services/TrackService");
 const LoggerHttp = require("../utils/logger").http;
 
 // La fonction permet d'ajouter un article
-module.exports.addOneTchat = function (req, res) {
+module.exports.addOneTrack = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Création d'une Tchat");
+  req.log.info("Création d'une Track");
   var options = {user: req, res}
-  TchatService.addOneTchat(req.body, null, function (err, value) {
+  TrackService.addOneTrack(req.body, null, function (err, value) {
     if (err && err.type_error == "no found") {
       res.statusCode = 404;
       res.send(err);
@@ -23,10 +23,10 @@ module.exports.addOneTchat = function (req, res) {
   });
 };
 
-// La fonction permet d'ajouter plusieurs Tchats
-module.exports.addManyTchats = function (req, res) {
-  req.log.info("Création de plusieurs Tchats");
-  TchatService.addManyTchats(req.body, null, function (err, value) {
+// La fonction permet d'ajouter plusieurs Tracks
+module.exports.addManyTracks = function (req, res) {
+  req.log.info("Création de plusieurs Tracks");
+  TrackService.addManyTracks(req.body, null, function (err, value) {
     if (err) {
       res.statusCode = 405;
       res.send(err);
@@ -37,11 +37,11 @@ module.exports.addManyTchats = function (req, res) {
   });
 };
 
-// La fonction permet de chercher une Tchat
-module.exports.findOneTchatById = function (req, res) {
-  req.log.info("Recherche d'une Tchat par son id");
+// La fonction permet de chercher une Track
+module.exports.findOneTrackById = function (req, res) {
+  req.log.info("Recherche d'une Track par son id");
   var opts = { populate: req.query.populate };
-  TchatService.findOneTchatById(req.params.id, opts, function (err, value) {
+  TrackService.findOneTrackById(req.params.id, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -58,14 +58,14 @@ module.exports.findOneTchatById = function (req, res) {
   });
 };
 
-// La fonction permet de chercher plusieurs Tchats
-module.exports.findManyTchatsById = function (req, res) {
+// La fonction permet de chercher plusieurs Tracks
+module.exports.findManyTracksById = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche de plusieurs Tchats", req.query.id);
+  req.log.info("Recherche de plusieurs Tracks", req.query.id);
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var opts = { populate: req.query.populate };
-  TchatService.findManyTchatsById(arg, opts, function (err, value) {
+  TrackService.findManyTracksById(arg, opts, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -83,13 +83,13 @@ module.exports.findManyTchatsById = function (req, res) {
 };
 
 // La fonction permet de chercher un utilisateur par les champs autorisé
-module.exports.findOneTchat = function (req, res) {
+module.exports.findOneTrack = function (req, res) {
   LoggerHttp(req, res);
   req.log.info("Recherche d'un article par un champ autorisé");
   let fields = req.query.fields;
   if (fields && !Array.isArray(fields)) fields = [fields];
   var opts = { populate: req.query.populate };
-  TchatService.findOneTchat(
+  TrackService.findOneTrack(
     fields,
     req.query.value,
     opts,
@@ -112,13 +112,13 @@ module.exports.findOneTchat = function (req, res) {
 };
 
 // La fonction permet de chercher plusieurs utilisateurs
-module.exports.findManyTchats = function (req, res) {
-  req.log.info("Recherche de plusieurs Tchats");
+module.exports.findManyTracks = function (req, res) {
+  req.log.info("Recherche de plusieurs Tracks");
   let page = req.query.page;
   let pageSize = req.query.pageSize;
   let searchValue = req.query.q;
   var opts = { populate: req.query.populate };
-  TchatService.findManyTchats(
+  TrackService.findManyTracks(
     searchValue,
     pageSize,
     page,
@@ -138,12 +138,12 @@ module.exports.findManyTchats = function (req, res) {
   );
 };
 
-// La fonction permet de modifier une Tchat
-module.exports.updateOneTchat = function (req, res) {
+// La fonction permet de modifier une Track
+module.exports.updateOneTrack = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification d'une Tchat");
+  req.log.info("Modification d'une Track");
   let update = req.body;
-  TchatService.updateOneTchat(
+  TrackService.updateOneTrack(
     req.params.id,
     update,
     null,
@@ -171,13 +171,13 @@ module.exports.updateOneTchat = function (req, res) {
 };
 
 // La fonction permet de modifier plusieurs articles
-module.exports.updateManyTchats = function (req, res) {
+module.exports.updateManyTracks = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Modification de plusieurs Tchats");
+  req.log.info("Modification de plusieurs Tracks");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
   var updateData = req.body;
-  TchatService.updateManyTchats(
+  TrackService.updateManyTracks(
     arg,
     updateData,
     null,
@@ -203,11 +203,11 @@ module.exports.updateManyTchats = function (req, res) {
   );
 };
 
-// La fonction permet de supprimer une Tchat
-module.exports.deleteOneTchat = function (req, res) {
+// La fonction permet de supprimer une Track
+module.exports.deleteOneTrack = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression d'une Tchat");
-  TchatService.deleteOneTchat(req.params.id, null, function (err, value) {
+  req.log.info("Suppression d'une Track");
+  TrackService.deleteOneTrack(req.params.id, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
@@ -224,13 +224,13 @@ module.exports.deleteOneTchat = function (req, res) {
   });
 };
 
-// La fonction permet de supprimer plusieurs Tchats
-module.exports.deleteManyTchats = function (req, res) {
+// La fonction permet de supprimer plusieurs Tracks
+module.exports.deleteManyTracks = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Suppression de plusieurs Tchats");
+  req.log.info("Suppression de plusieurs Tracks");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
-  TchatService.deleteManyTchates(arg, null, function (err, value) {
+  TrackService.deleteManyTrackes(arg, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);

@@ -336,7 +336,7 @@ module.exports.findManyUsers = function (
     let query_mongo = search
       ? {
           $or: _.map(
-            ["username", "dateofbirth", "email"],
+            ["username","typeAccount"],
             (e) => {
               return { [e]: { $regex: search } };
             }

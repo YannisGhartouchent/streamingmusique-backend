@@ -4,21 +4,13 @@ var UserSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
-  dateofbirthday: {
+  dateofbirth: {
     type: String,
     required: true,
   },
-  status: {
-    type: String,
-    required: true,
-    
-  },
-  user_id: {
-    type: ObjectId,
-    ref: "User",
-    required: true
-  },
+  
   email: {
     type: String,
     required: true,
@@ -29,10 +21,15 @@ var UserSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    enum: [
+      "FREE",
+      "Admin",
+      "Premium",
+    ]
   },
   setting: {
-  type: String,
-  required: true,
+  type: mongoose.Types.ObjectId,
+  required: false,
   },
   password: {
     type: String,
@@ -48,6 +45,10 @@ var UserSchema = mongoose.Schema({
   updated_at: {
     type: Date,
   },
+  quantity: {
+      type: Number,
+      required: false,
+  }
 });
 
 module.exports = UserSchema;

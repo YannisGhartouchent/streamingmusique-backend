@@ -1,7 +1,7 @@
 const TchatService = require("../services/TchatService");
 const LoggerHttp = require("../utils/logger").http;
 
-// La fonction permet d'ajouter un Tchat
+// La fonction permet d'ajouter un article
 module.exports.addOneTchat = function (req, res) {
   LoggerHttp(req, res);
   req.log.info("Création d'un Tchat");
@@ -37,7 +37,8 @@ module.exports.addManyTchats = function (req, res) {
   });
 };
 
-// La fonction permet de chercher une Tchat
+// La fonction permet de chercher un
+ Tchat
 module.exports.findOneTchatById = function (req, res) {
   req.log.info("Recherche d'une Tchat par son id");
   var opts = { populate: req.query.populate };
@@ -85,7 +86,7 @@ module.exports.findManyTchatsById = function (req, res) {
 // La fonction permet de chercher un utilisateur par les champs autorisé
 module.exports.findOneTchat = function (req, res) {
   LoggerHttp(req, res);
-  req.log.info("Recherche d'un Tchat par un champ autorisé");
+  req.log.info("Recherche d'un article par un champ autorisé");
   let fields = req.query.fields;
   if (fields && !Array.isArray(fields)) fields = [fields];
   var opts = { populate: req.query.populate };
@@ -170,7 +171,7 @@ module.exports.updateOneTchat = function (req, res) {
   );
 };
 
-// La fonction permet de modifier plusieurs Tchats
+// La fonction permet de modifier plusieurs articles
 module.exports.updateManyTchats = function (req, res) {
   LoggerHttp(req, res);
   req.log.info("Modification de plusieurs Tchats");
@@ -230,7 +231,7 @@ module.exports.deleteManyTchats = function (req, res) {
   req.log.info("Suppression de plusieurs Tchats");
   var arg = req.query.id;
   if (arg && !Array.isArray(arg)) arg = [arg];
-  TchatService.deleteManyTchats(arg, null, function (err, value) {
+  TchatService.deleteManyTchates(arg, null, function (err, value) {
     if (err && err.type_error == "no-found") {
       res.statusCode = 404;
       res.send(err);
